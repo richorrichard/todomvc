@@ -71,6 +71,7 @@ jQuery(function ($) {
 			$('#toggle-all').prop('checked', this.getActiveTodos().length === 0);
 			this.renderFooter();
 			$('#new-todo').focus();
+			//util.store('todos-jquery', this.todos); // Remove storage functionality from render method
 		},
 		renderFooter: function () {
 			var todoCount = this.todos.length;
@@ -92,7 +93,7 @@ jQuery(function ($) {
 			});
 
 			this.render();
-			util.store('todos-jquery', this.todos);
+			util.store('todos-jquery', this.todos); // call the same util.store wherever app.render is called.
 		},
 		getActiveTodos: function () {
 			return this.todos.filter(function (todo) {
@@ -119,10 +120,8 @@ jQuery(function ($) {
 			this.todos = this.getActiveTodos();
 			this.filter = 'all';
 			this.render();
-			util.store('todos-jquery', this.todos);
+			util.store('todos-jquery', this.todos); // call the same util.store wherever app.render is called.
 		},
-		// accepts an element from inside the `.item` div and
-		// returns the corresponding index in the `todos` array
 		indexFromEl: function (el) {
 			var id = $(el).closest('li').data('id');
 			var todos = this.todos;
@@ -151,13 +150,13 @@ jQuery(function ($) {
 			$input.val('');
 
 			this.render();
-			util.store('todos-jquery', this.todos);
+			util.store('todos-jquery', this.todos); // call the same util.store wherever app.render is called.
 		},
 		toggle: function (e) {
 			var i = this.indexFromEl(e.target);
 			this.todos[i].completed = !this.todos[i].completed;
 			this.render();
-			util.store('todos-jquery', this.todos);
+			util.store('todos-jquery', this.todos); // call the same util.store wherever app.render is called.
 		},
 		edit: function (e) {
 			var $input = $(e.target).closest('li').addClass('editing').find('.edit');
@@ -189,12 +188,12 @@ jQuery(function ($) {
 			}
 
 			this.render();
-			util.store('todos-jquery', this.todos);
+			util.store('todos-jquery', this.todos); // call the same util.store wherever app.render is called.
 		},
 		destroy: function (e) {
 			this.todos.splice(this.indexFromEl(e.target), 1);
 			this.render();
-			util.store('todos-jquery', this.todos);
+			util.store('todos-jquery', this.todos); // call the same util.store wherever app.render is called.
 		}
 	};
 
